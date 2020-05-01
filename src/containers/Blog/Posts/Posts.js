@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axiosInstance from "../../../axios";
+import {Link} from 'react-router-dom';
 
 import Post from '../../../components/Post/Post'
 import './Posts.css'
@@ -10,6 +11,8 @@ class Posts extends Component {
     }
 
     componentDidMount() {
+
+
         //returns a promise (once data is fetched)
         // recieves response obj
         axiosInstance.get('/posts')
@@ -38,11 +41,14 @@ class Posts extends Component {
         if(!this.state.error) {
             // get state data that was just updated and loop over each to create new post element
             posts = this.state.posts.map(post => {
-                return <Post
-                    key={post.id}
+                return (
+                    <Link to={'/' + post.id} key={post.id}>
+                    <Post
                     title={post.title}
                     author={post.author}
                     clicked={() => this.postSelectedHandler(post.id)}/>
+                    </Link>
+                    )
             })
         }
 

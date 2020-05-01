@@ -10,12 +10,13 @@ class FullPost extends Component {
 
 
 // if u call setState w/in componentDidUpdate it creates an infinite loop bc setState the component will be updated and componentDidUpdate will be called again so make a check to ensure only if it was a new post
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.id) { // first have  the id and then a litle bit later have loadedPost. so  you cant reRender dom immediately after u get id wo first getting loadedPost
+    componentDidMount() {
+        console.log(this.props);
+        if(this.props.match.params.id) { // first have  the id and then a litle bit later have loadedPost. so  you cant reRender dom immediately after u get id wo first getting loadedPost
 
             // if its no post has been loaded yet or if its a different post than the previous
             if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)){
-                axios.get('/posts/' + this.props.id)
+                axios.get('/posts/' + this.props.match.params.id)
                     .then(response => {
                         this.setState({loadedPost: response.data})
                     })

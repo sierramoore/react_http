@@ -6,7 +6,6 @@ import { Route, NavLink, Switch } from 'react-router-dom';
 import Posts from './Posts/Posts';
 import './Blog.css';
 import NewPost from "./NewPost/NewPost";
-import FullPost from "./FullPost/FullPost";
 
 
 class Blog extends Component {
@@ -21,7 +20,7 @@ class Blog extends Component {
                             <li><NavLink
                                 to="/"
                                 exact
-                            >Home</NavLink></li>
+                            >Posts</NavLink></li>
 
                             <li><NavLink
                                 to={{
@@ -31,11 +30,9 @@ class Blog extends Component {
                     </nav>
                 </header>
 
-                <Route path="/" exact component={Posts} />
-
                 <Switch>
-                    <Route path="/new-post"  component={NewPost} />
-                    <Route path="/:id" exact component={FullPost} />
+                    <Route path="/new-post" component={NewPost} />
+                    <Route path="/posts" component={Posts} />
                 </Switch>
 
 
@@ -54,3 +51,6 @@ export default Blog;
 // pathname: this.props.match.url + /whatever/ or <Link to={props.match.url + '/new'}> creates a relative path. will append ending to whatever current url they are on
 
 //NavLink is basically the same and has .active style built in for active link styling
+
+
+// can use Route anywhere in app as long as component is wrapped in <BrowserRouter> (wrapped app in it so its avaliable basically everywhere)

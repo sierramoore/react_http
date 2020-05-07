@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Redirect} from "react-router";
 
 import './NewPost.css';
 
@@ -7,7 +8,8 @@ class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        author: 'Max',
+        submitted: false
     }
 
     postDataHandler = () => {
@@ -20,12 +22,27 @@ class NewPost extends Component {
         axios.post('/posts', post)
             .then(response => {
                 console.log(response)
+                this.setState({submitted: true})
+
+                // other method w/o Redirect
+                // this.props.history.push('/posts')
+                // using push when u click back button it will go back to prev page (not w replace or Redirect ways it would go back to prev prev)
+                // could use .replace instead of push and would work the same as Redirect
             })
     }
 
     render () {
+        let redirect = null;
+        if(this.state.submitted){
+            redirect = <Redirect to="/posts" />
+            //Redirect replaces whole page
+        }
+        // render component to leave the page in return
         return (
             <div className="NewPost">
+
+                {redirect}
+
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />

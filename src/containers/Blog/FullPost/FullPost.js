@@ -30,8 +30,8 @@ class FullPost extends Component {
         if(this.props.match.params.id) { // first have  the id and then a litle bit later have loadedPost. so  you cant reRender dom immediately after u get id wo first getting loadedPost
 
             // if its no post has been loaded yet or if its a different post than the previous
-            if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id != this.props.match.params.id)){
-                // id stored in loaded post is a number so could convert props.id into a number (ex by: !== +this.props.match.params.id) or unexact equality match
+            if(!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== +this.props.match.params.id)){
+                // id stored in loaded post is a number so could convert props.id into a number (ex by: !== +this.props.match.params.id) or unexact equality match !=
                 axios.get('/posts/' + this.props.match.params.id)
                     .then(response => {
                         this.setState({loadedPost: response.data})
